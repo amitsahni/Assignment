@@ -11,18 +11,17 @@ import com.assignment.data.repository.InfoRepository
 import com.assignment.extension.fromJson
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class GetInfoUseCase(private val infoRepository: InfoRepository) :
     UseCase<LiveData<Event<Result<InfoModel>>>> {
-    override fun execute(): LiveData<Event<Result<InfoModel>>> {
+    override fun execute(scope: CoroutineScope): LiveData<Event<Result<InfoModel>>> {
         val mutableLiveData = MutableLiveData<Event<Result<InfoModel>>>()
         mutableLiveData.postValue(Event(Result.Loading))
         val handlerException = CoroutineExceptionHandler { _, throwable ->
             mutableLiveData.postValue(Event(Result.Error(ErrorResponse(throwable.message ?: ""))))
         }
-        CoroutineScope(Dispatchers.IO).launch(handlerException) {
+        scope.launch(handlerException) {
             infoRepository.fetchInfo().apply {
                 val toPost = when (this) {
                     is Response.Success -> {

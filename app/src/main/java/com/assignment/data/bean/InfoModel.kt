@@ -18,4 +18,7 @@ data class Row(
     val image: String? = "", // http://3.bp.blogspot.com/__mokxbTmuJM/RnWuJ6cE9cI/AAAAAAAAATw/6z3m3w9JDiU/s400/019843_31.jpg
     @SerializedName("title")
     val title: String? = "" // Language
-) : Serializable
+) : Serializable {
+
+
+}

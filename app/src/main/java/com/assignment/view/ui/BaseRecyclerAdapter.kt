@@ -2,6 +2,7 @@ package com.assignment.view.ui
 
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 
@@ -12,9 +13,12 @@ abstract class BaseRecyclerAdapter<VH : RecyclerView.ViewHolder, T> :
 
     var list = emptyList<T>()
         set(items) {
+            val diffCallback = DiffCallback(items, field)
+            val diffResult = DiffUtil.calculateDiff(diffCallback)
             field = items
             count = list.size
-            this.notifyDataSetChanged()
+            // this.notifyDataSetChanged()
+            diffResult.dispatchUpdatesTo(this)
         }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -49,4 +53,25 @@ data class Item<T>(
 )
 
 class Holder(view: View) : RecyclerView.ViewHolder(view)
+
+private class DiffCallback<T>(private val newList: List<T>, private val oldList: List<T>) :
+    DiffUtil.Callback() {
+
+    override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] === newList[newItemPosition]
+    }
+
+    override fun getOldListSize(): Int {
+        return oldList.size
+    }
+
+    override fun getNewListSize(): Int {
+        return newList.size
+    }
+
+    override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+        return oldList[oldItemPosition] == newList[newItemPosition]
+    }
+
+}
 

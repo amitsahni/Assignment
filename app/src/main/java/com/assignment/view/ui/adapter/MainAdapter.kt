@@ -3,12 +3,11 @@ package com.assignment.view.ui.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.assignment.data.bean.Row
 import com.assignment.databinding.ItemInfoBinding
 import com.assignment.view.ui.BaseRecyclerAdapter
-import com.assignment.view.ui.Item
+import com.assignment.view.vm.RowItem
 
-class MainAdapter : BaseRecyclerAdapter<MainAdapter.Holder, Row>() {
+class MainAdapter : BaseRecyclerAdapter<MainAdapter.Holder, RowItem>() {
 
     class Holder(val view: ItemInfoBinding) : RecyclerView.ViewHolder(view.root)
 
@@ -21,8 +20,5 @@ class MainAdapter : BaseRecyclerAdapter<MainAdapter.Holder, Row>() {
     override fun onBindItemViewHolder(holder: Holder, position: Int) {
         val model = getItem(position)
         holder.view.model = model
-        holder.view.root.setOnClickListener {
-            clickListener?.invoke(Item(position, model))
-        }
     }
 }

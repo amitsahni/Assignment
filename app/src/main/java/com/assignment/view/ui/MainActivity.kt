@@ -3,12 +3,13 @@ package com.assignment.view.ui
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.assignment.R
-import com.assignment.data.EventObserver
-import com.assignment.data.Result
 import com.assignment.databinding.ActivityMainBinding
 import com.assignment.extension.startActivity
 import com.assignment.view.ui.adapter.MainAdapter
+import com.assignment.view.vm.MainEvent
+import com.assignment.view.vm.MainState
 import com.assignment.view.vm.MainVM
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,31 +33,30 @@ class MainActivity : AppCompatActivity() {
         observe()
         binding.recyclerView.adapter = adapter
 
-        mainVM.fetchInfo()
+        mainVM.onAction(MainEvent.FetchEvent)
         swipeRefresh.setOnRefreshListener {
-            mainVM.fetchInfo()
-        }
-
-        adapter.click {
-            startActivity<DetailActivity> {
-                putExtras(DetailActivity.getBundle(it.model))
-            }
+            mainVM.onAction(MainEvent.FetchEvent)
         }
     }
 
     private fun observe() {
-        mainVM.fetchInfoLiveData.observe(this, EventObserver {
+        mainVM.fetchInfoLiveData.observe(this, Observer {
             when (it) {
-                is Result.Loading -> {
+                is MainState.Loading -> {
                     swipeRefresh.isRefreshing = true
                 }
-                is Result.Success -> {
+                is MainState.Success -> {
                     swipeRefresh.isRefreshing = false
-                    adapter.list = it.data?.rows ?: emptyList()
+                    adapter.list = it.data ?: emptyList()
                 }
-                is Result.Error -> {
+                is MainState.Error -> {
                     swipeRefresh.isRefreshing = false
                     adapter.list = emptyList()
+                }
+                is MainState.Click -> {
+                    startActivity<DetailActivity> {
+                        putExtras(DetailActivity.getBundle(it.row))
+                    }
                 }
             }
         })

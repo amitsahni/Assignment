@@ -9,7 +9,7 @@
         <!--Step 2-->
         <variable
             name="model"
-            type="com.assignment.data.bean.Row" />
+            type="com.assignment.view.vm.RowItem" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -23,6 +23,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> model.onTapped()}"
             android:orientation="vertical"
             android:padding="5dp">
 
@@ -31,7 +32,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:scaleType="centerCrop"
-                app:imageUrl="@{model.image}"
+                app:imageUrl="@{model.row.image}"
                 tools:src="@drawable/ic_launcher_background" />
 
             <TextView
@@ -40,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_toEndOf="@id/avtar"
-                android:text="@{model.title}"
+                android:text="@{model.row.title}"
                 tools:text="Title" />
 
             <TextView
@@ -51,7 +52,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_toEndOf="@id/avtar"
-                android:text="@{model.description}"
+                android:text="@{model.row.description}"
                 tools:text="Description" />
 
         </RelativeLayout>

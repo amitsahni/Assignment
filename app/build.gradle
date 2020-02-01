@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply from: '../sourcesets.gradle'
+apply from: '../depency.gradle'
 
 android {
     compileSdkVersion 29
@@ -31,9 +33,11 @@ android {
     }
 }
 
-dependencies {
+/*dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     testImplementation 'junit:junit:4.12'
+    testImplementation "android.arch.core:core-testing:1.1.1"
+    testImplementation 'org.koin:koin-test:2.0.1'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     def dependencies = rootProject.ext
@@ -43,4 +47,4 @@ dependencies {
     implementation dependencies.di.values()
     implementation dependencies.logging.values()
 
-}
+}*/
