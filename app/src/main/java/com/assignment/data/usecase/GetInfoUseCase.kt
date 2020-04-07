@@ -1,21 +1,13 @@
 package com.assignment.data.usecase
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.assignment.data.Event
-import com.assignment.data.Response
 import com.assignment.data.Result
-import com.assignment.data.bean.ErrorResponse
 import com.assignment.data.bean.InfoModel
+import com.assignment.data.datasource.InfoDataSource
 import com.assignment.data.repository.InfoRepository
-import com.assignment.extension.fromJson
-import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 
 class GetInfoUseCase(private val infoRepository: InfoRepository) :
-    UseCase<LiveData<Event<Result<InfoModel>>>> {
-    override fun execute(scope: CoroutineScope): LiveData<Event<Result<InfoModel>>> {
+    UseCase<InfoModel> {
+    /*override fun execute(scope: CoroutineScope): LiveData<Event<Result<InfoModel>>> {
         val mutableLiveData = MutableLiveData<Event<Result<InfoModel>>>()
         mutableLiveData.postValue(Event(Result.Loading))
         val handlerException = CoroutineExceptionHandler { _, throwable ->
@@ -35,5 +27,17 @@ class GetInfoUseCase(private val infoRepository: InfoRepository) :
             }
         }
         return mutableLiveData
+    }*/
+
+    override suspend fun execute(parameter: Nothing): Result<InfoModel> {
+        return InfoDataSource().infoResult()
     }
 }
+
+/*
+fun <T> Response<T>.toResult(): Result<T> {
+    return when (this) {
+        is Response.Success -> Result.Success(this.data)
+        is Response.Error -> Result.Error(this.data.fromJson())
+    }
+}*/

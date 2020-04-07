@@ -7,3 +7,4 @@ interface InfoRepository {
 
     suspend fun fetchInfo(): Response<InfoModel>
 }
+

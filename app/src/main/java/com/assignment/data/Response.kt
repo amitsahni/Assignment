@@ -3,7 +3,7 @@ package com.assignment.data
 
 sealed class Response<out T> {
 
-    data class Success<out T>(val data: T?) : Response<T>()
+    data class Success<out T>(val data: T) : Response<T>()
     data class Error(val data: String?) : Response<Nothing>()
     //data class Exception(val exception: Throwable) : Response<Nothing>()
 

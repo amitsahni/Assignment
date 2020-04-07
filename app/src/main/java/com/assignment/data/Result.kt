@@ -4,7 +4,7 @@ import com.assignment.data.bean.ErrorResponse
 
 sealed class Result<out T> {
 
-    data class Success<out T>(val data: T?) : Result<T>()
+    data class Success<out T>(val data: T) : Result<T>()
     data class Error(val error: ErrorResponse) : Result<Nothing>()
 //    data class Exception(val e: Throwable) : Result<Nothing>()
     object Loading : Result<Nothing>()

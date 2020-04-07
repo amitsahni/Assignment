@@ -17,3 +17,16 @@ interface ApiService {
         }
     }
 }
+
+fun <T> Response<T>.toResult(): com.assignment.data.Response<T> {
+    return if (isSuccessful) {
+        val b = body()
+        return if (b == null) {
+            com.assignment.data.Response.Error("Something Went Wrong")
+        } else {
+            com.assignment.data.Response.Success(b)
+        }
+    } else {
+        com.assignment.data.Response.Error(errorBody()?.string())
+    }
+}
