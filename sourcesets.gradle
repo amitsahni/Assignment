@@ -1,0 +1,16 @@
+android {
+    sourceSets {
+        main {
+            res.srcDirs += 'src/main/res'
+            res.srcDirs += 'src/main/drawable'
+
+            file("src/main/res/other")
+                    .listFiles()
+                    .each { res.srcDirs += it.path }
+
+            file("src/main/res/drawables")
+                    .listFiles()
+                    .each { res.srcDirs += it.path }
+        }
+    }
+}

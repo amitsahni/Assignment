@@ -9,6 +9,7 @@ import com.assignment.data.Result
 import com.assignment.databinding.ActivityMainBinding
 import com.assignment.extension.startActivity
 import com.assignment.view.ui.adapter.MainAdapter
+import com.assignment.view.vm.MainAction
 import com.assignment.view.vm.MainVM
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -32,9 +33,9 @@ class MainActivity : AppCompatActivity() {
         observe()
         binding.recyclerView.adapter = adapter
 
-        mainVM.fetchInfo()
+        mainVM.onAction(MainAction.UserInfo)
         swipeRefresh.setOnRefreshListener {
-            mainVM.fetchInfo()
+            mainVM.onAction(MainAction.UserInfo)
         }
 
         adapter.click {
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 is Result.Success -> {
                     swipeRefresh.isRefreshing = false
-                    adapter.list = it.data?.rows ?: emptyList()
+                    adapter.list = it.data.rows ?: emptyList()
                 }
                 is Result.Error -> {
                     swipeRefresh.isRefreshing = false

@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply from: '../sourcesets.gradle'
+apply from: '../dependencies.gradle'
 
 android {
     compileSdkVersion 29
@@ -29,18 +31,4 @@ android {
     dataBinding {
         enabled = true
     }
-}
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    def dependencies = rootProject.ext
-    implementation dependencies.appDependencies.values()
-    implementation dependencies.networkDependencies.values()
-    implementation dependencies.imageLoadingDependencies.values()
-    implementation dependencies.di.values()
-    implementation dependencies.logging.values()
-
 }

@@ -1,12 +1,13 @@
 package com.assignment.data
 
 import com.assignment.data.bean.ErrorResponse
+import com.assignment.extension.fromJson
 
 sealed class Result<out T> {
 
-    data class Success<out T>(val data: T?) : Result<T>()
+    data class Success<out T>(val data: T) : Result<T>()
     data class Error(val error: ErrorResponse) : Result<Nothing>()
-//    data class Exception(val e: Throwable) : Result<Nothing>()
+    data class Exception(val e: Throwable) : Result<Nothing>()
     object Loading : Result<Nothing>()
 
     override fun toString(): String {
@@ -14,7 +15,7 @@ sealed class Result<out T> {
             is Success<*> -> "Success[data=$data]"
             is Error -> "Error[exception=$error]"
             is Loading -> "Loading"
-//            is Exception -> "Exception[expection=$e]"
+            is Exception -> "Exception[expection=$e]"
         }
     }
 }
@@ -22,7 +23,7 @@ sealed class Result<out T> {
 /**
  * `true` if [Result] is of episodeType [Success] & holds non-null [Success.data].
  */
-val Result<*>.succeeded
+val Result<*>.isSucceeded
     get() = this is Result.Success && data != null
 
 
@@ -40,23 +41,10 @@ fun <T> Result<T>.error(): ErrorResponse? {
     return null
 }
 
-/*fun <T> Result<T>.exception(): Throwable? {
-    if (this is Result.Exception) {
-        return e
+fun <T> Response<T>.toResult(): Result<T> {
+    return when (this) {
+        is Response.Success -> Result.Success(data)
+        is Response.Error -> Result.Error(data.fromJson())
+        is Response.Exception -> Result.Exception(exception)
     }
-    return null
-}*/
-
-fun <T : Any> Result<T>.success(action: (T) -> Unit): Result<T> {
-    if (this is Result.Success) data?.let(action)
-    return this
 }
-
-inline fun <T : Any> Result<T>.error(action: (ErrorResponse) -> Unit) {
-    if (this is Result.Error) action(error)
-}
-
-/*
-inline fun <T : Any> Result<T>.exception(action: (Throwable) -> Unit) {
-    if (this is Result.Exception) action(e)
-}*/

@@ -1,47 +1,27 @@
-ext {
-    appCompatVersion = '1.1.0'
-    multidex = '2.0.1'
-    kotlinVersion = '1.3.50'
-    recyclerviewVersion = '1.1.0'
-    ktx = '1.1.0'
-    coroutines = '1.3.0'
-    lifecycle = '2.1.0'
-    material = '1.0.0'
-    appDependencies = [
-            appCompat   : "androidx.appcompat:appcompat:${appCompatVersion}",
-            multidex    : "androidx.multidex:multidex:${multidex}",
-            kotlin      : "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${kotlinVersion}",
-            recyclerview: "androidx.recyclerview:recyclerview:${recyclerviewVersion}",
-            ktx         : "androidx.core:core-ktx:${ktx}",
-            coroutines  : "org.jetbrains.kotlinx:kotlinx-coroutines-android:${coroutines}",
-            lifecycle   : "androidx.lifecycle:lifecycle-extensions:${lifecycle}",
-            material    : "com.google.android.material:material:${material}"
-    ]
+dependencies {
 
-    retrofitVersion = '2.6.0'
-    loggingInterceptorVersion = '4.2.1'
-    scalar = '2.6.0'
-    networkDependencies = [
-            retrofit : "com.squareup.retrofit2:retrofit:${retrofitVersion}",
-            converter: "com.squareup.retrofit2:converter-gson:${retrofitVersion}",
-            scalar   : "com.squareup.retrofit2:converter-scalars:${scalar}"
-    ]
+    /*** appDependencies ***/
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.61'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.0'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
-    glide = '4.9.0'
-    imageLoadingDependencies = [
-            glide: "com.github.bumptech.glide:glide:${glide}"
-    ]
+    /*** networkDependencies ***/
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.6.0'
 
-    koin = '2.0.1'
-    di = [
-            koin: "org.koin:koin-androidx-viewmodel:${koin}"
-    ]
+    /*** imageLoadingDependencies ***/
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
 
+    /*** di ***/
+    implementation 'org.koin:koin-androidx-viewmodel:2.1.5'
 
-    timber = '4.7.1'
-    logging = [
-            timber: "com.jakewharton.timber:timber:${timber}"
-    ]
-
-
+    /*** timber ***/
+    implementation 'com.jakewharton.timber:timber:4.7.1'
 }
